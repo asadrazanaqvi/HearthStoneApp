@@ -1,11 +1,15 @@
-import { MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
+import { MD3LightTheme, MD3DarkTheme, MD3Theme } from 'react-native-paper';
 
-export type AppTheme = typeof MD3LightTheme & {
-  colors: {
-    secondary: string;
-    backgroundSecondary: string;
-  };
+type CustomColors = typeof MD3LightTheme.colors & {
+  text: string;
+  error: string;
+  secondary: string;
+  backgroundSecondary: string;
 };
+
+export interface AppTheme extends MD3Theme {
+  colors: CustomColors;
+}
 
 export const lightTheme: AppTheme = {
   ...MD3LightTheme,

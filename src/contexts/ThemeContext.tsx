@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import { lightTheme, darkTheme, ThemeType, AppTheme } from '../styles/theme';
 
 interface ThemeContextValue {
@@ -15,7 +15,12 @@ const ThemeContext = createContext<ThemeContextValue>({
   setTheme: () => {},
 });
 
-export const ThemeProvider: React.FC = ({ children }) => {
+// Updated Correct typing for props
+interface ThemeProviderProps {
+  children: ReactNode;
+}
+
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [themeType, setThemeType] = useState<ThemeType>('light');
 
   const theme = useMemo(() => {
