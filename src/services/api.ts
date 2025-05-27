@@ -11,30 +11,31 @@ export interface Card {
   text?: string;
   playerClass?: string;
   img?: string;
+  faction?: string;
+  dbfId?: number;
+  locale?: string;
+}
+
+// The API returns an object with card sets as keys and arrays of cards as values
+interface ApiResponse {
+  [key: string]: Card[];
 }
 
 const instance = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'X-RapidAPI-Key': Platform.OS === 'ios' ? 'YOUR_IOS_API_KEY' : 'YOUR_ANDROID_API_KEY',
-    'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com'
+   timeout: 0, //because taking more time 
+ headers: {
+    'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
+    'X-RapidAPI-Key': Platform.OS === 'ios' ? '0585a7e6b1msh56da407e15a306dp13f6d1jsnf1b5d15aa785' : '0585a7e6b1msh56da407e15a306dp13f6d1jsnf1b5d15aa785'
   }
 });
 
-export const getAllCards = async (): Promise<Card[]> => {
-  try {
-    const response = await instance.get('/cards');
-    return response.data;
-  } catch (error) {
-    throw new Error('Failed to fetch cards');
-  }
+export const getAllCards = async (): Promise<ApiResponse> => {
+  const response = await instance.get('/cards');
+  return response.data;
 };
 
-export const getCardsByType = async (type: string): Promise<Card[]> => {
-  try {
-    const response = await instance.get(`/cards/types/${type}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(`Failed to fetch cards of type ${type}`);
-  }
+export const getCardsByType = async (type: string): Promise<ApiResponse> => {
+  const response = await instance.get(`/cards/types/${type}`);
+  return response.data;
 };
