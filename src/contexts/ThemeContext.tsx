@@ -8,7 +8,7 @@ interface ThemeContextValue {
   setTheme: (type: ThemeType) => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue>({
+export const ThemeContext = createContext<ThemeContextValue>({
   theme: lightTheme,
   themeType: 'light',
   toggleTheme: () => {},

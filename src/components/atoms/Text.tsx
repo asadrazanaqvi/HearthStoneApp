@@ -1,16 +1,18 @@
 import React from 'react';
-import { Text as RNText, TextProps, StyleSheet } from 'react-native';
+import { Text as RNText, TextProps } from 'react-native';
 import { useTheme } from '../../contexts/ThemeContext';
 
 interface Props extends TextProps {
   variant?: 'title' | 'subtitle' | 'body';
   bold?: boolean;
+  testID?: string;
 }
 
 export const Text: React.FC<Props> = ({ 
   variant = 'body', 
   bold = false,
   style,
+  testID,
   ...props 
 }) => {
   const { theme } = useTheme();
@@ -21,5 +23,6 @@ export const Text: React.FC<Props> = ({
     fontWeight: bold ? 'bold' : 'normal',
   };
 
-  return <RNText style={[textStyle, style]} {...props} />;
+  return <RNText testID={testID} style={[textStyle, style]} {...props} />;
 };
+

@@ -5,9 +5,10 @@ import { useTheme } from '../../contexts/ThemeContext';
 
 interface Props {
   onSearch: (query: string) => void;
+  testID?: string;
 }
 
-export const SearchBar: React.FC<Props> = ({ onSearch }) => {
+export const SearchBar: React.FC<Props> = ({ onSearch, testID = 'search-bar' }) => {
   const [query, setQuery] = useState('');
   const { theme } = useTheme();
 
@@ -19,8 +20,9 @@ export const SearchBar: React.FC<Props> = ({ onSearch }) => {
   }, [query, debouncedSearch]);
 
   return (
-    <View style={styles.container}>
+    <View testID={`${testID}-container`} style={styles.container}>
       <TextInput
+        testID={testID}
         style={[
           styles.input,
           {
@@ -33,6 +35,7 @@ export const SearchBar: React.FC<Props> = ({ onSearch }) => {
         placeholderTextColor={theme.colors.primary}
         value={query}
         onChangeText={setQuery}
+        accessibilityLabel="Search card types"
       />
     </View>
   );

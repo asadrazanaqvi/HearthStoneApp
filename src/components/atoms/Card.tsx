@@ -6,21 +6,25 @@ interface Props {
   style?: ViewStyle;
   children?: React.ReactNode;
   onPress?: () => void;
+  testID?: string;
 }
 
-export const Card: React.FC<Props> = ({ style, children, onPress }) => {
+export const Card: React.FC<Props> = ({ style, children, onPress, testID }) => {
   const { theme } = useTheme();
 
   return (
-    <Pressable onPress={onPress}>
-      <View style={[
-        styles.container,
-        {
-          backgroundColor: theme.colors.surface,
-          borderColor: theme.colors.backgroundSecondary,
-        },
-        style
-      ]}>
+    <Pressable testID={`${testID}-pressable`} onPress={onPress} accessibilityLabel={testID ? `${testID}-card` : undefined}>
+      <View
+        testID={testID}
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.colors.surface,
+            borderColor: theme.colors.backgroundSecondary,
+          },
+          style,
+        ]}
+      >
         {children}
       </View>
     </Pressable>

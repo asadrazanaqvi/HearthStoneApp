@@ -10,6 +10,7 @@ export const ThemeToggle: React.FC = () => {
     <View style={styles.container}>
       <Text>Dark Mode</Text>
       <Switch
+        testID="theme-toggle"
         value={themeType === 'dark'}
         onValueChange={toggleTheme}
         thumbColor={theme.colors.primary}
