@@ -9,7 +9,7 @@ import { useCards } from '../contexts/CardContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CardSet'>;
 
-export const CardSetScreen: React.FC<Props> = ({ route }) => {
+export const CardSetScreen: React.FC<Props> = ({ route, navigation }) => { // Added navigation here
   const { setName } = route.params;
   const { allCards } = useCards();
   const { theme } = useTheme();
