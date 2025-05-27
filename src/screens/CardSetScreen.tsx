@@ -9,7 +9,7 @@ import { useCards } from '../contexts/CardContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'CardSet'>;
 
-export const CardSetScreen: React.FC<Props> = ({ route, navigation }) => { // Added navigation here
+export const CardSetScreen: React.FC<Props> = ({ route, navigation }) => {
   const { setName } = route.params;
   const { allCards } = useCards();
   const { theme } = useTheme();
@@ -17,19 +17,21 @@ export const CardSetScreen: React.FC<Props> = ({ route, navigation }) => { // Ad
   const cardsInSet = allCards.filter(card => card.cardSet === setName);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Text variant="title" style={styles.title}>{setName}</Text>
+    <View testID="card-set-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Text testID="card-set-title" variant="title" style={styles.title}>{setName}</Text>
       <FlatList
+        testID="card-set-list"
         data={cardsInSet}
         keyExtractor={(card) => card.cardId}
         renderItem={({ item: card }) => (
           <Card 
+            testID={`card-${card.cardId}`}
             style={styles.card}
             onPress={() => navigation.navigate('CardDetail', { cardId: card.cardId })}
           >
-            <Text variant="subtitle">{card.name}</Text>
-            <Text>{card.type}</Text>
-            {card.text && <Text style={styles.cardText}>{card.text}</Text>}
+            <Text testID={`card-name-${card.cardId}`} variant="subtitle">{card.name}</Text>
+            <Text testID={`card-type-${card.cardId}`}>{card.type}</Text>
+            {card.text && <Text testID={`card-text-${card.cardId}`} style={styles.cardText}>{card.text}</Text>}
           </Card>
         )}
         contentContainerStyle={styles.list}

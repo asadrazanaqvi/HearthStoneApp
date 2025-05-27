@@ -17,7 +17,7 @@ export interface Card {
 }
 
 // The API returns an object with card sets as keys and arrays of cards as values
-interface ApiResponse {
+export interface ApiResponse {
   [key: string]: Card[];
 }
 

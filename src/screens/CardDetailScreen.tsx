@@ -18,29 +18,31 @@ export const CardDetailScreen: React.FC<Props> = ({ route }) => {
 
   if (!card) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <Text>Card not found</Text>
+      <View testID="card-detail-not-found-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <Text testID="not-found-message">Card not found</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <Card style={styles.card}>
+    <ScrollView testID="card-detail-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Card testID={`card-detail-${card.cardId}`} style={styles.card}>
         {card.img && (
           <Image 
+            testID={`card-image-${card.cardId}`}
             source={{ uri: card.img }} 
             style={styles.image}
             resizeMode="contain"
+            accessibilityLabel={`Image of ${card.name}`}
           />
         )}
-        <Text variant="title" style={styles.cardName}>{card.name}</Text>
-        <Text style={styles.cardType}>{card.type} - {card.cardSet}</Text>
+        <Text testID={`card-name-${card.cardId}`} variant="title" style={styles.cardName}>{card.name}</Text>
+        <Text testID={`card-type-${card.cardId}`} style={styles.cardType}>{card.type} - {card.cardSet}</Text>
         {card.playerClass && (
-          <Text style={styles.cardClass}>Class: {card.playerClass}</Text>
+          <Text testID={`card-class-${card.cardId}`} style={styles.cardClass}>Class: {card.playerClass}</Text>
         )}
         {card.text && (
-          <Text style={styles.cardText}>{card.text}</Text>
+          <Text testID={`card-text-${card.cardId}`} style={styles.cardText}>{card.text}</Text>
         )}
       </Card>
     </ScrollView>

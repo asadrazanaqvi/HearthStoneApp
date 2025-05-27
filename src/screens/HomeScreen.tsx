@@ -1,4 +1,3 @@
-// src/screens/HomeScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View, ActivityIndicator } from 'react-native';
 import { useCards } from '../contexts/CardContext';
@@ -40,46 +39,51 @@ export const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   if (loading) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
+      <View testID="loading-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <ActivityIndicator testID="loading-indicator" size="large" color={theme.colors.primary} />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <Text style={styles.error}>{error}</Text>
+      <View testID="error-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <Text testID="error-message" style={styles.error}>{error}</Text>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <SearchBar onSearch={setSearchQuery} />
+    <View testID="home-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <SearchBar testID="search-bar" onSearch={setSearchQuery} />
       <FlatList
+        testID="card-sets-list"
         data={filteredSets}
         keyExtractor={([setName]) => setName}
         renderItem={({ item: [setName, cards] }) => (
-          <Card style={styles.setCard}>
-            <Text variant="title" style={styles.setTitle}>{setName}</Text>
+          <Card testID={`card-set-${setName}`} style={styles.setCard}>
+            <Text testID={`set-title-${setName}`} variant="title" style={styles.setTitle}>{setName}</Text>
             <FlatList
+              testID={`cards-list-${setName}`}
               data={cards.slice(0, 3)} // Show first 3 cards as preview
               keyExtractor={(card) => card.cardId}
               renderItem={({ item: card }) => (
                 <Card 
+                  testID={`card-${card.cardId}`}
                   style={styles.cardItem}
                   onPress={() => navigation.navigate('CardDetail', { cardId: card.cardId })}
                 >
-                  <Text variant="subtitle">{card.name}</Text>
-                  <Text>{card.type}</Text>
+                  <Text testID={`card-name-${card.cardId}`} variant="subtitle">{card.name}</Text>
+                  <Text testID={`card-type-${card.cardId}`}>{card.type}</Text>
                 </Card>
               )}
             />
             {cards.length > 3 && (
               <Text 
+                testID={`view-more-${setName}`}
                 style={styles.viewMore}
                 onPress={() => navigation.navigate('CardSet', { setName })}
+                accessibilityLabel={`View more cards in ${setName}`}
               >
                 View {cards.length - 3} more...
               </Text>

@@ -20,37 +20,40 @@ export const CardsByTypeScreen: React.FC<Props> = ({ route }) => {
 
   if (loading) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
+      <View testID="cards-by-type-loading-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <ActivityIndicator testID="loading-indicator" size="large" color={theme.colors.primary} />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-        <Text style={styles.error}>{error}</Text>
+      <View testID="cards-by-type-error-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <Text testID="error-message" style={styles.error}>{error}</Text>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View testID="cards-by-type-container" style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <FlatList
+        testID="cards-by-type-list"
         data={cardsByType}
         keyExtractor={(item) => item.cardId}
         renderItem={({ item }) => (
-          <Card>
+          <Card testID={`card-${item.cardId}`}>
             {item.img && (
               <Image 
+                testID={`card-image-${item.cardId}`}
                 source={{ uri: item.img }} 
                 style={styles.image}
                 resizeMode="contain"
+                accessibilityLabel={`Image of ${item.name}`}
               />
             )}
-            <Text variant="subtitle">{item.name}</Text>
-            <Text>{item.cardSet}</Text>
-            {item.text && <Text style={styles.cardText}>{item.text}</Text>}
+            <Text testID={`card-name-${item.cardId}`} variant="subtitle">{item.name}</Text>
+            <Text testID={`card-set-${item.cardId}`}>{item.cardSet}</Text>
+            {item.text && <Text testID={`card-text-${item.cardId}`} style={styles.cardText}>{item.text}</Text>}
           </Card>
         )}
         contentContainerStyle={styles.list}
