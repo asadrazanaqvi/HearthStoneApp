@@ -26,7 +26,7 @@ const instance = axios.create({
   timeout: 0, // No timeout to allow long requests (consider adjusting if needed)
   headers: {
     'X-RapidAPI-Host': 'omgvamp-hearthstone-v1.p.rapidapi.com',
-    'X-RapidAPI-Key': Platform.OS === 'ios' 
+    'X-RapidAPI-Key': Platform.OS === 'ios'
       ? '0585a7e6b1msh56da407e15a306dp13f6d1jsnf1b5d15aa785' 
       : '0585a7e6b1msh56da407e15a306dp13f6d1jsnf1b5d15aa785',
   },
